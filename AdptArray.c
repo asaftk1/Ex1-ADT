@@ -4,6 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*  
+    The AdptArray structure contains the following fields:
+
+    copy_func: A function pointer to copy an element in the array.
+    del_func: A function pointer to delete an element in the array.
+    print_func: A function pointer to print an element in the array.
+    len: The current length (i.e., the number of elements) of the array.
+    data: An array of PElement pointers that points to the elements stored in the array.
+*/
 typedef struct AdptArray_
 {
     COPY_FUNC copy_func;
@@ -12,8 +21,12 @@ typedef struct AdptArray_
     int len;
     PElement* data;
 }AdptArray;
- 
 
+
+/*      @CreateAdptArray:
+    creating a new AdptArray instance and initializes its properties , 
+    it takes three function pointers as argument and return a pointer to the created AdaptArray.
+*/ 
 
 PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func,PRINT_FUNC print_func)
 {
@@ -37,7 +50,11 @@ PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func,PRINT_FUNC pri
 }
 
 
-
+/*      @DeleteAdptArray
+    This function deletes an existing AdptArray instance and its associated elements.
+    It first iterates over the elements in the array and deletes each element using the DEL_FUNC function pointer.
+    Then it frees the memory used by the array and the AdptArray instance.
+*/
 void DeleteAdptArray(PAdptArray AdptArray)
 {
 
@@ -56,6 +73,12 @@ void DeleteAdptArray(PAdptArray AdptArray)
     
 }
 
+/*      @SetAdaptArray
+    This function sets an element at a specific index in the AdptArray.
+    If the index is beyond the current length of the array, 
+    the function resizes the array to accommodate the new element.
+    It returns a SUCCESS result if the element is set successfully, otherwise a FAIL result.
+*/
 Result SetAdptArrayAt(PAdptArray AdptArray, int index, PElement element)
 {
     if(index < 0){
@@ -86,6 +109,12 @@ Result SetAdptArrayAt(PAdptArray AdptArray, int index, PElement element)
     
 }
 
+
+/*      @GetAdaptArrayAt
+     This function gets an element from the AdptArray at a specific index.
+     It first checks if the index is within the range of the array and the element at that index is not NULL.
+     If so, it copies the element using the COPY_FUNC function pointer and returns the copy.
+*/
 PElement GetAdptArrayAt(PAdptArray arr, int index)
 {
     if(index > (arr->len)) 
@@ -99,6 +128,9 @@ PElement GetAdptArrayAt(PAdptArray arr, int index)
 
 }
 
+/*      @GetAdaptArraySize
+    This function returns the current size of the AdptArray.
+*/
 int GetAdptArraySize(PAdptArray arr)
 {
     if (arr == NULL)
@@ -109,6 +141,9 @@ int GetAdptArraySize(PAdptArray arr)
     
 }
 
+/*      @PrintDB
+     This function prints all the elements in the AdptArray using the PRINT_FUNC function pointer.     
+*/
 void PrintDB(PAdptArray arr)
 {
     if(arr != NULL)
